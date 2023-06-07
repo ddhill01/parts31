@@ -1,12 +1,28 @@
 <!DOCTYPE html>
-<html lang="<%= I18n.locale %>">
+<html>
   <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script> -->
+
     <link rel="icon" type="image/png" href="/PARTS3.ico">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <title>PdM Parts 3.0</title>
+     <!-- include the Roboto font from Google Fonts -->
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+     <!-- set the font-family property for the body element -->
+     <style>
+     body {
+      font-family: 'Roboto', sans-serif;
+     }
+  </style>
 
-    <title>PdM PARTS 3.0 on Render!</title>
 
-     ...
-</html>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <body style="padding-top: 0px;"> <!-- Change 50px to the desired padding value -->
+    <%= yield %>
+  </body>
