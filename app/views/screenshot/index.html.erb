@@ -1,0 +1,74 @@
+<h1>Welcome to the Screenshot Test Page</h1>
+<p>Find me in app/views/screenshot/index.html.erb</p>
+<%= render partial: 'layouts/menus/menu_bar' %>
+<!-- Add the image tag with an ID -->
+<img id="screenshotImage" src="" alt="Screenshot">
+
+<head>
+  <%= csrf_meta_tags %>
+  <meta name="csrf-token" content="<%= form_authenticity_token %>">
+  <%= javascript_include_tag 'token' %>
+  <script>
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+  </script>
+</head>
+
+<div>
+  <!-- Add the take screenshot button -->
+  <button class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full" id="screencap">
+    Take Screenshot
+  </button>
+
+  <!-- Add the delete screenshot button -->
+  <button class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded-full" id="deleteScreenshot" style="display: none;">
+    Delete Screenshot
+  </button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Hide the image initially
+    var screenshotImage = document.getElementById('screenshotImage');
+    screenshotImage.style.display = 'none';
+
+    // Add a click event listener to the button
+    var screencapButton = document.getElementById('screencap');
+    screencapButton.addEventListener('click', function() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/capture', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          // Display the screenshot image after capturing
+          screenshotImage.src = '/images/screenshot_crop.png';
+          screenshotImage.style.display = 'block';
+
+        // Show the delete screenshot button
+          var deleteScreenshotButton = document.getElementById('deleteScreenshot');
+          deleteScreenshotButton.style.display = 'block';
+        }
+      };
+      xhr.send(JSON.stringify({}));
+    });
+
+   // Add a click event listener to the delete screenshot button
+    var deleteScreenshotButton = document.getElementById('deleteScreenshot');
+    deleteScreenshotButton.addEventListener('click', function() {
+      // Perform deletion logic here
+      // For example, you can send an AJAX request to a delete route
+      // and handle the deletion server-side
+      // After successful deletion, you can reset the UI as needed
+      
+      // Hide the screenshot image
+      screenshotImage.style.display = 'none';
+
+      // Hide the delete screenshot button
+      deleteScreenshotButton.style.display = 'none';
+    });
+  });
+</script>

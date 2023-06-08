@@ -4,4 +4,9 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+  # Screenshots
+  get '/screenshot', to: 'screenshot#index'
+   
+  # Route the capture action to the screenshot capture module in screenshot controller.
+  post 'capture' => 'screenshot#capture'
 end
